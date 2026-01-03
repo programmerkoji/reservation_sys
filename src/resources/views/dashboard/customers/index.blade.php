@@ -5,10 +5,10 @@
                 お客様
             </h2>
 
-            <button type="button" @click="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'customer-create' }))"
-                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
-                追加
-            </button>
+	            <button type="button" x-data @click="$dispatch('open-modal', 'customer-create')"
+	                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+	                追加
+	            </button>
         </div>
     </x-slot>
 
@@ -51,10 +51,10 @@
                     @if ($selectedCustomer)
                         <div class="flex items-center justify-between">
                             <h3 class="font-semibold text-gray-900">{{ $selectedCustomer->name }}</h3>
-                            <button type="button" @click="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'customer-edit' }))"
-                                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
-                                編集
-                            </button>
+	                            <button type="button" x-data @click="$dispatch('open-modal', 'customer-edit')"
+	                                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+	                                編集
+	                            </button>
                         </div>
 
                         <div class="mt-3 grid gap-2 text-sm">

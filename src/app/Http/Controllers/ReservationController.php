@@ -76,7 +76,8 @@ class ReservationController extends Controller
         $startAt = Carbon::parse($validated['start_at']);
         $endAt = Carbon::parse($validated['end_at']);
 
-        if ($startAt->diffInMinutes($endAt) !== (int) $setting->slot_minutes) {
+        $diffSeconds = $endAt->getTimestamp() - $startAt->getTimestamp();
+        if ($diffSeconds !== (int) $setting->slot_minutes * 60) {
             return response()->json([
                 'message' => '予約時間が正しくありません。',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -160,4 +161,3 @@ class ReservationController extends Controller
         return response()->noContent();
     }
 }
-
