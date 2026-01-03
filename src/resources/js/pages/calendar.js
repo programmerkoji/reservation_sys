@@ -1,5 +1,6 @@
 window.reservationCalendar = function reservationCalendar(config) {
     const customers = config.customers ?? [];
+    const destroyUrlBase = config.destroyUrlBase ?? config.updateUrlBase;
 
     return {
         calendar: null,
@@ -25,6 +26,7 @@ window.reservationCalendar = function reservationCalendar(config) {
             memo: '',
             status: 'booked',
         },
+        deleteReservation: async () => {},
         init() {
             if (!window.FullCalendar || !window.FullCalendar.Calendar) {
                 setTimeout(() => this.init(), 50);
@@ -174,6 +176,28 @@ window.reservationCalendar = function reservationCalendar(config) {
                 } finally {
                     this.edit.saving = false;
                 }
+            };
+
+            this.deleteReservation = async () => {
+                if (!this.edit.id) return;
+                if (!confirm('削除しますか？')) return;
+
+                const res = await fetch(`${destroyUrlBase}/${this.edit.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Accept: 'application/json',
+                        'X-CSRF-TOKEN': csrf,
+                    },
+                });
+
+                if (!res.ok) {
+                    const data = await res.json().catch(() => null);
+                    alert(data?.message ?? '削除できませんでした。');
+                    return;
+                }
+
+                this.closeEdit();
+                this.calendar.refetchEvents();
             };
         },
         openCreate(date) {

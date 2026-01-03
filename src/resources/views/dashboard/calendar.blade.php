@@ -17,6 +17,7 @@
                         storeUrl: @js(route('dashboard.calendar.reservations.store')),
                         showUrlBase: @js(url('/dashboard/calendar/reservations')),
                         updateUrlBase: @js(url('/dashboard/calendar/reservations')),
+                        destroyUrlBase: @js(url('/dashboard/calendar/reservations')),
                         customers: @js($customers),
                     };
                 </script>
@@ -103,6 +104,11 @@
                             </div>
 
                             <div class="mt-5 flex justify-end gap-2">
+                                <button type="button"
+                                    class="me-auto inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-50"
+                                    @click="deleteReservation()">
+                                    削除
+                                </button>
                                 <x-secondary-button type="button" @click="closeEdit()">閉じる</x-secondary-button>
                                 <x-primary-button type="button" @click="saveEdit()" x-bind:disabled="edit.saving">
                                     保存

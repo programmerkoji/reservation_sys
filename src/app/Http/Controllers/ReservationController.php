@@ -24,6 +24,7 @@ class ReservationController extends Controller
 
         $reservations = Reservation::query()
             ->with('customer:id,name')
+            ->where('status', '!=', 'cancel')
             ->where('start_at', '<', $end)
             ->where('end_at', '>', $start)
             ->orderBy('start_at')
@@ -157,6 +158,15 @@ class ReservationController extends Controller
         $reservation->memo = $validated['memo'] ?? null;
         $reservation->status = $validated['status'];
         $reservation->save();
+
+        return response()->noContent();
+    }
+
+    public function destroy(Reservation $reservation)
+    {
+        $reservation->update([
+            'status' => 'cancel',
+        ]);
 
         return response()->noContent();
     }

@@ -22,6 +22,7 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
     Route::post('/calendar/reservations', [ReservationController::class, 'store'])->name('calendar.reservations.store');
     Route::get('/calendar/reservations/{reservation}', [ReservationController::class, 'show'])->name('calendar.reservations.show');
     Route::patch('/calendar/reservations/{reservation}', [ReservationController::class, 'update'])->name('calendar.reservations.update');
+    Route::delete('/calendar/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('calendar.reservations.destroy');
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
