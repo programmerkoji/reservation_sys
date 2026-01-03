@@ -1,44 +1,110 @@
-# Repository Guidelines
+# AGENTS.md
 
-## Project Structure & Module Organization
+このリポジトリは、AIコーディングエージェント（Codex等）を使用して開発します。
+本ドキュメントは、すべてのエージェントが必ず守るルールを定義します。
 
-- `docker/`: Docker build context (PHP-FPM image, Nginx config, PHP ini).
-- `docker-compose.yml`: Local dev stack (Nginx + PHP-FPM + MySQL + phpMyAdmin).
-- `src/`: Laravel application root.
-  - `src/app/`, `src/routes/`, `src/resources/`, `src/config/`, `src/database/`: core app code and configuration.
-  - `src/public/`: web root (served by Nginx); built assets land in `src/public/build/`.
-  - `src/tests/`: PHPUnit tests (`Feature/` and `Unit/`).
+---
 
-## Build, Test, and Development Commands
+## 1. プロジェクトの目的
 
-Run from repository root unless noted.
+このプロジェクトの目的は、
+**小規模事業者が電話対応中でも迷わず使える、
+最小構成の予約管理システムを作ること**です。
 
-- Start/stop stack: `docker compose up -d --build` / `docker compose down`
-- Tail logs: `docker compose logs -f --tail=100`
-- Run Artisan inside container: `docker compose exec backend php artisan <command>`
-- Install PHP deps (container): `docker compose exec backend composer install`
-- Frontend (run in `src/`): `npm install`, `npm run dev`, `npm run build` (Vite + Tailwind)
-- One-shot bootstrap (run in `src/`): `composer run setup` (installs deps, creates `.env`, migrates, builds assets)
+汎用システムやSaaSを作ることは目的ではありません。
 
-## Coding Style & Naming Conventions
+---
 
-- Indentation: 4 spaces (see `src/.editorconfig`); YAML uses 2 spaces.
-- PHP: follow Laravel conventions and PSR-12; format with Pint: `cd src && ./vendor/bin/pint`
-- Naming: classes `StudlyCase`, methods/vars `camelCase`, routes/controller files match their class names.
+## 2. 想定ユーザー
 
-## Testing Guidelines
+- 個人事業主
+- 小規模事業者
+- IT担当者はいない
+- 操作しながら電話対応を行う
 
-- Framework: PHPUnit via Laravel test runner.
-- Run tests: `docker compose exec backend php artisan test`
-- Add tests under `src/tests/Feature` for HTTP flows and `src/tests/Unit` for isolated logic; name files `*Test.php`.
+「使える人」基準ではなく、
+「誰でも使える」基準で設計します。
 
-## Commit & Pull Request Guidelines
+---
 
-- This repo snapshot doesn’t include `.git`, so no house commit style is detectable; prefer Conventional Commits:
-  - Example: `feat(reservations): add cancel endpoint`
-- PRs: include a clear summary, test instructions/outputs, and screenshots for UI changes; link related issues/tickets.
+## 3. 技術スタック（厳守）
 
-## Security & Configuration Tips
+以下のみ使用を許可します。
 
-- Never commit secrets: use `src/.env.example` as the template; keep `src/.env` local.
-- Avoid committing generated deps/artifacts (`src/vendor/`, `src/node_modules/`, `src/public/build/`).
+- Laravel
+- Blade
+- Alpine.js
+- FullCalendar
+- MySQL
+
+以下は禁止します。
+
+- React / Vue 等のSPA
+- APIファースト設計
+- マイクロサービス
+- 過剰なデザインパターン
+
+---
+
+## 4. スコープ制御（最重要）
+
+以下の機能は**絶対に実装しません**。
+
+- ユーザー登録機能
+- 顧客向け予約画面
+- オンライン決済
+- 通知機能（メール、LINE等）
+- 複数店舗対応
+- スタッフ別管理
+
+明示されていない機能は、すべて「実装しない」と判断してください。
+
+---
+
+## 5. UI設計方針
+
+- カレンダーを中心とした画面
+- 画面遷移を極力しない
+- モーダルで完結
+- ボタン・入力項目は最小限
+- 専門用語を使わない
+
+---
+
+## 6. 予約入力の考え方
+
+- 電話中は「仮予約」のみ
+- 詳細入力は電話後に行う
+- 入力を強制しない
+
+---
+
+## 7. データ設計
+
+- シンプルなテーブル構成を優先
+- 正規化は最小限
+- 抽象化・汎用化は禁止
+
+---
+
+## 8. 実装時のルール
+
+- 指示された範囲のみ変更する
+- ついでのリファクタリングは禁止
+- 改善提案は不要
+
+---
+
+## 9. 判断に迷った場合
+
+- 勝手に判断しない
+- 推測で実装しない
+- 必ず確認するか、作業を止める
+
+---
+
+## 10. 成功の定義
+
+- マニュアルなしで使える
+- 電話対応中に操作できる
+- 「地味だが安心」な画面である
