@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Domain\Models\Customer;
 use App\Models\Setting;
 
 class CalendarController extends Controller
@@ -17,4 +17,3 @@ class CalendarController extends Controller
         ]);
     }
 }
-

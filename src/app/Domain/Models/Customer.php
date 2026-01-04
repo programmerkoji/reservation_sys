@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,4 +18,3 @@ class Customer extends Model
         return $this->hasMany(Reservation::class);
     }
 }
-

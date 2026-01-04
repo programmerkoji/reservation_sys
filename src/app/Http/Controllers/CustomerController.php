@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Domain\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller

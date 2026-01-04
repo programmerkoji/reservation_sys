@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,4 +25,3 @@ class Reservation extends Model
         return $this->belongsTo(Customer::class);
     }
 }
-
